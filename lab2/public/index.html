@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CST Student Management System</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: { DEFAULT: '#7A1E32', dark: '#5c1626' },
+            gold: '#C9A227',
+            paper: '#FAF9F6',
+            ink: '#211815',
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-paper text-ink font-sans min-h-screen">
+
+  <header class="bg-maroon border-b-[3px] border-gold">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-3">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-full border-2 border-gold flex items-center justify-center text-gold font-serif font-bold text-xs">CST</span>
+        <span class="text-white font-serif font-bold text-base tracking-wide">Student Management System</span>
+      </a>
+      <nav class="flex gap-6 text-sm font-medium">
+        <a href="login.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Login</a>
+        <a href="payment.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Payment</a>
+        <a href="register.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Register</a>
+        <a href="results.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Results</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto mt-16 px-6 text-center">
+    <span class="w-16 h-16 mx-auto rounded-full border-2 border-gold flex items-center justify-center text-maroon font-serif font-bold text-lg mb-6">CST</span>
+    <h1 class="font-serif text-2xl font-bold mb-2">College of Science and Technology</h1>
+    <p class="text-ink/60 text-sm mb-8">Royal University of Bhutan &mdash; Student Management System</p>
+
+    <div class="bg-white border border-stone-200 rounded-lg shadow-sm p-6 text-left">
+      <p class="text-xs uppercase tracking-wider text-gold font-semibold mb-2">Demo credentials</p>
+      <p class="text-sm">Student ID: <span class="font-mono font-medium">02240354</span></p>
+      <p class="text-sm">Password: <span class="font-mono font-medium">Pema1234</span></p>
+    </div>
+  </main>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login &mdash; CST SMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: { DEFAULT: '#7A1E32', dark: '#5c1626' },
+            gold: '#C9A227',
+            paper: '#FAF9F6',
+            ink: '#211815',
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-paper text-ink font-sans min-h-screen">
+
+  <header class="bg-maroon border-b-[3px] border-gold">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-3">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-full border-2 border-gold flex items-center justify-center text-gold font-serif font-bold text-xs">CST</span>
+        <span class="text-white font-serif font-bold text-base tracking-wide">Student Management System</span>
+      </a>
+      <nav class="flex gap-6 text-sm font-medium">
+        <a href="login.html" class="text-white border-b-2 border-gold pb-1">Login</a>
+        <a href="payment.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Payment</a>
+        <a href="register.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Register</a>
+        <a href="results.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Results</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto mt-16 px-6">
+    <div class="bg-white border border-stone-200 rounded-lg shadow-sm p-8">
+      <p class="text-xs uppercase tracking-wider text-gold font-semibold mb-1">Student Login &middot; R1&ndash;R4</p>
+      <h1 class="font-serif text-xl font-bold mb-6 pb-4 border-b-2 border-gold/40">Sign In</h1>
+
+      <label class="block text-xs font-medium text-ink/60 mb-1">Student ID</label>
+      <input id="studentId" placeholder="8 digits, e.g. 02240354"
+        class="w-full mb-4 px-3 py-2 border border-stone-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-maroon/40 focus:border-maroon" />
+
+      <label class="block text-xs font-medium text-ink/60 mb-1">Password</label>
+      <input id="password" type="password" placeholder="Password"
+        class="w-full mb-6 px-3 py-2 border border-stone-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-maroon/40 focus:border-maroon" />
+
+      <button onclick="login()"
+        class="w-full bg-maroon hover:bg-maroon-dark text-white text-sm font-semibold uppercase tracking-wide py-2.5 rounded-md transition">
+        Log In
+      </button>
+
+      <div id="message" class="mt-4"></div>
+    </div>
+  </main>
+
+  <script>
+    async function login() {
+      const studentId = document.getElementById("studentId").value;
+      const password = document.getElementById("password").value;
+
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ studentId, password }),
+      });
+      const data = await res.json();
+      showMessage(data);
+    }
+
+    function showMessage(data) {
+      const el = document.getElementById("message");
+      const base = "text-sm font-medium px-3 py-2 rounded-md";
+      if (data.success) {
+        el.innerHTML = `<div class="${base} bg-green-50 text-green-700 border border-green-200">${data.message}</div>`;
+      } else {
+        el.innerHTML = `<div class="${base} bg-red-50 text-red-700 border border-red-200">${data.message}</div>`;
+      }
+    }
+  </script>
+</body>
+</html>

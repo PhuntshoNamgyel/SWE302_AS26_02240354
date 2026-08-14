@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Results &mdash; CST SMS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            maroon: { DEFAULT: '#7A1E32', dark: '#5c1626' },
+            gold: '#C9A227',
+            paper: '#FAF9F6',
+            ink: '#211815',
+          },
+          fontFamily: {
+            serif: ['Fraunces', 'Georgia', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+</head>
+<body class="bg-paper text-ink font-sans min-h-screen">
+
+  <header class="bg-maroon border-b-[3px] border-gold">
+    <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between flex-wrap gap-3">
+      <a href="index.html" class="flex items-center gap-3">
+        <span class="w-9 h-9 rounded-full border-2 border-gold flex items-center justify-center text-gold font-serif font-bold text-xs">CST</span>
+        <span class="text-white font-serif font-bold text-base tracking-wide">Student Management System</span>
+      </a>
+      <nav class="flex gap-6 text-sm font-medium">
+        <a href="login.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Login</a>
+        <a href="payment.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Payment</a>
+        <a href="register.html" class="text-white/80 hover:text-white border-b-2 border-transparent hover:border-gold pb-1 transition">Register</a>
+        <a href="results.html" class="text-white border-b-2 border-gold pb-1">Results</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-md mx-auto mt-16 px-6">
+    <div class="bg-white border border-stone-200 rounded-lg shadow-sm p-8">
+      <p class="text-xs uppercase tracking-wider text-gold font-semibold mb-1">Result Viewing &middot; Section 4</p>
+      <h1 class="font-serif text-xl font-bold mb-6 pb-4 border-b-2 border-gold/40">View Results</h1>
+
+      <label class="block text-xs font-medium text-ink/60 mb-1">Student ID</label>
+      <input id="studentId" value="02240354"
+        class="w-full mb-6 px-3 py-2 border border-stone-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-maroon/40 focus:border-maroon" />
+
+      <button onclick="viewResults()"
+        class="w-full bg-maroon hover:bg-maroon-dark text-white text-sm font-semibold uppercase tracking-wide py-2.5 rounded-md transition">
+        View Results
+      </button>
+
+      <div id="results" class="mt-6"></div>
+      <div id="message" class="mt-4"></div>
+    </div>
+  </main>
+
+  <script>
+    async function viewResults() {
+      const studentId = document.getElementById("studentId").value;
+      const res = await fetch("/api/results/" + studentId);
+      const data = await res.json();
+
+      const msgEl = document.getElementById("message");
+      const resEl = document.getElementById("results");
+
+      if (!data.success) {
+        msgEl.innerHTML = `<div class="text-sm font-medium px-3 py-2 rounded-md bg-red-50 text-red-700 border border-red-200">${data.message}</div>`;
+        resEl.innerHTML = "";
+        return;
+      }
+
+      msgEl.innerHTML = "";
+      const rows = data.results.map(r => `
+        <tr class="border-b border-stone-200 last:border-0">
+          <td class="py-2 text-sm font-mono">${r.moduleCode}</td>
+          <td class="py-2 text-sm">${r.moduleTitle}</td>
+          <td class="py-2 text-sm font-semibold text-maroon">${r.grade}</td>
+        </tr>`).join("");
+
+      resEl.innerHTML = `
+        <table class="w-full mb-4">
+          <thead>
+            <tr class="text-left text-xs uppercase tracking-wider text-ink/50 border-b-2 border-gold/40">
+              <th class="pb-2">Module</th>
+              <th class="pb-2">Title</th>
+              <th class="pb-2">Grade</th>
+            </tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+        <button onclick="window.print()"
+          class="w-full bg-white border border-maroon text-maroon hover:bg-maroon hover:text-white text-sm font-semibold uppercase tracking-wide py-2.5 rounded-md transition">
+          Download as PDF
+        </button>`;
+    }
+  </script>
+</body>
+</html>

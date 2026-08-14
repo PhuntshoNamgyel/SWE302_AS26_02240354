@@ -1,0 +1,17 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+
+# Test coverage reports
+coverage/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+
+# Editor
+.vscode/
