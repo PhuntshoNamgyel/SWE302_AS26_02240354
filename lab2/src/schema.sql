@@ -1,0 +1,9 @@
+DROP TABLE IF EXISTS students;
+
+CREATE TABLE students (
+  student_id VARCHAR(8) PRIMARY KEY,
+  full_name VARCHAR(100) NOT NULL,
+  email VARCHAR(100) NOT NULL,
+  programme VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW()
+);
